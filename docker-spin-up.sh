@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
+sudo apt install git
 
 # 0) Create the shared network
-docker network create soc-net
+sudo docker network create soc-net
 
 # 1) Kernel setting required by OpenSearch
 sudo sysctl -w vm.max_map_count=262144
