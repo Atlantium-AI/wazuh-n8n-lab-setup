@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "9b1119f5-8607-40ea-93d9-438f5e4ea6db",
+		"name": "Wazuh",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47905607",
+		"_collection_link": "https://ben-wolfley-s-team.postman.co/workspace/ben-wolfley's-Workspace~8e0f5beb-2a72-43c6-849c-7789404bb477/collection/47905607-9b1119f5-8607-40ea-93d9-438f5e4ea6db?action=share&source=collection_link&creator=47905607"
+	},
+	"item": [
+		{
+			"name": "Wazuh Management Server APIs",
+			"item": [
+				{
+					"name": "Wuzah Authenticate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set('token', pm.response.text().replace(/\"/g,''));",
+									"pm.environment.set('tokenCreatedAt', Date.now());",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/security/user/authenticate?raw=true",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"security",
+								"user",
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "raw",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Agents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/agents?limit=10&offset=0",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"agents"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Manager Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/manager/info",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"manager",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Syscollector",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/syscollector/001/packages?limit=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"syscollector",
+								"001",
+								"packages"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Wazuh Indexer APIs",
+			"item": [
+				{
+					"name": "Search Alerts",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"size\": 10,\n  \"sort\": [{ \"@timestamp\": { \"order\": \"desc\" } }],\n  \"_source\": [\n    \"@timestamp\",\n    \"agent.id\",\n    \"agent.name\",\n    \"rule.id\",\n    \"rule.level\",\n    \"rule.description\",\n    \"full_log\"\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl-Indexer}}/wazuh-alerts-4.x-*/_search",
+							"host": [
+								"{{baseUrl-Indexer}}"
+							],
+							"path": [
+								"wazuh-alerts-4.x-*",
+								"_search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Shards",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": { \"range\": { \"@timestamp\": { \"gte\": \"now-24h\" } } }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl-Indexer}}/wazuh-alerts-4.x-*/_count",
+							"host": [
+								"{{baseUrl-Indexer}}"
+							],
+							"path": [
+								"wazuh-alerts-4.x-*",
+								"_count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Indices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl-Indexer}}/_cat/indices",
+							"host": [
+								"{{baseUrl-Indexer}}"
+							],
+							"path": [
+								"_cat",
+								"indices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Aliases",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl-Indexer}}/_cat/aliases/wazuh*?v",
+							"host": [
+								"{{baseUrl-Indexer}}"
+							],
+							"path": [
+								"_cat",
+								"aliases",
+								"wazuh*"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "basic",
+				"basic": [
+					{
+						"key": "password",
+						"value": "{{Indexer-password}}",
+						"type": "string"
+					},
+					{
+						"key": "username",
+						"value": "{{Indexer-user}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"const ttlMs = 14 * 60 * 1000; // refresh just before 15 min default",
+					"const born = Number(pm.environment.get('tokenCreatedAt') || 0);",
+					"",
+					"function setToken(t) {",
+					"  pm.environment.set('token', t.replace(/\"/g,''));",
+					"  pm.environment.set('tokenCreatedAt', Date.now());",
+					"}",
+					"",
+					"if (!pm.environment.get('token') || Date.now() - born > ttlMs) {",
+					"  const u = pm.environment.get('username');",
+					"  const p = pm.environment.get('password');",
+					"  const b64 = btoa(`${u}:${p}`);",
+					"  pm.sendRequest({",
+					"    url: pm.environment.get('baseUrl') + '/security/user/authenticate?raw=true',",
+					"    method: 'POST',",
+					"    header: { 'Authorization': 'Basic ' + b64 }",
+					"  }, (err, res) => {",
+					"    if (err || !res || !res.text()) { console.error('Auth failed', err); }",
+					"    else setToken(res.text());",
+					"  });",
+					"}",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
