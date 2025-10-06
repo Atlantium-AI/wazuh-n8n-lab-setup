@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "9b1119f5-8607-40ea-93d9-438f5e4ea6db",
+		"_postman_id": "7772af1b-7e34-4835-a438-bcbac5ba3f51",
 		"name": "Wazuh",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "47905607",
-		"_collection_link": "https://ben-wolfley-s-team.postman.co/workspace/ben-wolfley's-Workspace~8e0f5beb-2a72-43c6-849c-7789404bb477/collection/47905607-9b1119f5-8607-40ea-93d9-438f5e4ea6db?action=share&source=collection_link&creator=47905607"
+		"_collection_link": "https://ben-wolfley-s-team.postman.co/workspace/ben-wolfley's-Workspace~8e0f5beb-2a72-43c6-849c-7789404bb477/collection/47905607-7772af1b-7e34-4835-a438-bcbac5ba3f51?action=share&source=collection_link&creator=47905607"
 	},
 	"item": [
 		{
@@ -22,7 +22,15 @@
 									""
 								],
 								"type": "text/javascript",
-								"packages": {}
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -32,12 +40,12 @@
 							"basic": [
 								{
 									"key": "password",
-									"value": "{{password}}",
+									"value": "{{api-password}}",
 									"type": "string"
 								},
 								{
 									"key": "username",
-									"value": "{{username}}",
+									"value": "{{api-username}}",
 									"type": "string"
 								}
 							]
@@ -45,9 +53,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/security/user/authenticate?raw=true",
+							"raw": "{{baseUrl-api}}/security/user/authenticate?raw=true",
 							"host": [
-								"{{baseUrl}}"
+								"{{baseUrl-api}}"
 							],
 							"path": [
 								"security",
@@ -70,9 +78,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/agents?limit=10&offset=0",
+							"raw": "{{baseUrl-api}}/agents?limit=10&offset=0",
 							"host": [
-								"{{baseUrl}}"
+								"{{baseUrl-api}}"
 							],
 							"path": [
 								"agents"
@@ -97,9 +105,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/manager/info",
+							"raw": "{{baseUrl-api}}/manager/info",
 							"host": [
-								"{{baseUrl}}"
+								"{{baseUrl-api}}"
 							],
 							"path": [
 								"manager",
@@ -115,9 +123,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/syscollector/001/packages?limit=10",
+							"raw": "{{baseUrl-api}}/syscollector/001/packages?limit=100",
 							"host": [
-								"{{baseUrl}}"
+								"{{baseUrl-api}}"
 							],
 							"path": [
 								"syscollector",
@@ -127,7 +135,7 @@
 							"query": [
 								{
 									"key": "limit",
-									"value": "10"
+									"value": "100"
 								}
 							]
 						}
@@ -212,31 +220,6 @@
 							"path": [
 								"_cat",
 								"indices"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Aliases",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl-Indexer}}/_cat/aliases/wazuh*?v",
-							"host": [
-								"{{baseUrl-Indexer}}"
-							],
-							"path": [
-								"_cat",
-								"aliases",
-								"wazuh*"
-							],
-							"query": [
-								{
-									"key": "v",
-									"value": null
-								}
 							]
 						}
 					},
