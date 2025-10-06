@@ -224,6 +224,31 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Indices - Table",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl-Indexer}}/_cat/aliases/wazuh*?v",
+							"host": [
+								"{{baseUrl-Indexer}}"
+							],
+							"path": [
+								"_cat",
+								"aliases",
+								"wazuh*"
+							],
+							"query": [
+								{
+									"key": "v",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"auth": {
