@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "7772af1b-7e34-4835-a438-bcbac5ba3f51",
+		"_postman_id": "1fb5313d-76ad-4d46-a22d-483a0655f1b5",
 		"name": "Wazuh",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "47905607",
-		"_collection_link": "https://ben-wolfley-s-team.postman.co/workspace/ben-wolfley's-Workspace~8e0f5beb-2a72-43c6-849c-7789404bb477/collection/47905607-7772af1b-7e34-4835-a438-bcbac5ba3f51?action=share&source=collection_link&creator=47905607"
+		"_collection_link": "https://ben-wolfley-s-team.postman.co/workspace/ben-wolfley's-Workspace~8e0f5beb-2a72-43c6-849c-7789404bb477/collection/47905607-1fb5313d-76ad-4d46-a22d-483a0655f1b5?action=share&source=collection_link&creator=47905607"
 	},
 	"item": [
 		{
@@ -147,6 +147,39 @@
 		{
 			"name": "Wazuh Indexer APIs",
 			"item": [
+				{
+					"name": "Count Alerts",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": {\n    \"bool\": {\n      \"filter\": [\n        { \"range\": { \"@timestamp\": { \"gte\": \"now-24h\" } } },\n        { \"range\": { \"rule.level\": { \"gte\": 5, \"lte\": 7 } } }\n      ]\n    }\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl-Indexer}}/wazuh-alerts-*/_count",
+							"host": [
+								"{{baseUrl-Indexer}}"
+							],
+							"path": [
+								"wazuh-alerts-*",
+								"_count"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "Search Alerts",
 					"request": {
